@@ -19,7 +19,7 @@ En la revisión puedes buscar, filtrar, seleccionar, corregir y validar propuest
 
 Las etiquetas y características se asocian mediante reglas espaciales y son propuestas, no resultados verificados. No se trazan conexiones. Las detecciones visuales aparecen identificadas como experimentales; deben revisarse antes de usarse en ingeniería. El modelo opcional YOLO11s distribuido aquí es la versión genérica entrenada en COCO: sus 80 clases representan objetos comunes, no símbolos de unifilar. Una ausencia de detecciones no demuestra ausencia de equipos. Su funcionamiento no equivale a la detección especializada de MEPdetect.
 
-En una prueba local preliminar con el plano privado, YOLO11s no produjo detecciones a un umbral de confianza del 35 %. La primera prueba de OCR web produjo 9 propuestas y algunos falsos positivos; la versión Windows produjo 123 propuestas en 122 segundos en el mismo equipo. Son cantidades sin revisar, no medidas de precisión ni exhaustividad. Se han ajustado las reglas después de la prueba web; todavía no hay una verdad de referencia revisada para comparar la calidad. No se debe emplear el recuento sin revisión técnica.
+En una prueba local preliminar con el plano privado, YOLO11s no produjo detecciones a un umbral de confianza del 35 %. El OCR web a 216 ppp produjo 16 propuestas (incluidos falsos positivos) y 2.038 fragmentos de texto; la versión Windows a 300 ppp produjo 123 propuestas y 1.248 palabras en 122 segundos en el mismo equipo. Las condiciones de OCR son distintas y estas cantidades no están revisadas; no son medidas de precisión ni exhaustividad. Todavía no hay una verdad de referencia revisada para comparar la calidad. No se debe emplear el recuento sin revisión técnica.
 
 ## Construcción y Cloudflare
 

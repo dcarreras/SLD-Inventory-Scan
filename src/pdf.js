@@ -16,7 +16,7 @@ export async function analyze(file, options, progress, cancelled) {
   if(options.ocr){
     progress('Cargando OCR local',10);
     const worker=await createWorker('eng',1,{workerPath:'/ocr/worker.min.js',corePath:'/ocr/core',langPath:'/ocr/lang',gzip:false,cacheMethod:'none'});
-    try{const scale=2, v=page.getViewport({scale}), size=1800, overlap=120, tiles=[];
+    try{const scale=3, v=page.getViewport({scale}), size=2500, overlap=160, tiles=[];
       for(let y=0;y<v.height;y+=size-overlap)for(let x=0;x<v.width;x+=size-overlap)tiles.push({x,y,w:Math.min(size,Math.ceil(v.width-x)),h:Math.min(size,Math.ceil(v.height-y))});
       for(let i=0;i<tiles.length;i++){if(cancelled())throw new Error('Análisis cancelado.');const t=tiles[i], canvas=document.createElement('canvas');canvas.width=t.w;canvas.height=t.h;await page.render({canvasContext:canvas.getContext('2d'),canvas,viewport:v,transform:[1,0,0,1,-t.x,-t.y]}).promise;
         const result=await worker.recognize(canvas,{}, {blocks:true});for(const block of result.data.blocks||[])for(const para of block.paragraphs||[])for(const line of para.lines||[])for(const w of line.words||[]){if(w.confidence<35||!w.text.trim())continue;words.push({text:w.text.trim(),x:(w.bbox.x0+t.x)/scale,y:(w.bbox.y0+t.y)/scale,width:(w.bbox.x1-w.bbox.x0)/scale,height:(w.bbox.y1-w.bbox.y0)/scale,source:'OCR',confidence:Math.round(w.confidence)})}canvas.width=0;canvas.height=0;progress(`OCR local · fragmento ${i+1} de ${tiles.length}`,10+80*(i+1)/tiles.length);
