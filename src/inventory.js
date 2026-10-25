@@ -14,7 +14,7 @@ export function proposals(words) {
   for (const word of clean.filter(w=>identifier.test(w.text) || descriptor.test(w.text))) {
     const nearby=clean.filter(w=>Math.abs(w.y-word.y)<25 && Math.abs(w.x-word.x)<160).sort((a,b)=>a.x-b.x);
     const description=nearby.map(w=>w.text).join(' ');
-    const tagged=nearby.filter(w=>identifier.test(w.text)).sort((a,b)=>Math.abs(a.x-word.x)-Math.abs(b.x-word.x))[0] || word;
+    const tagged=clean.filter(w=>identifier.test(w.text) && Math.abs(w.y-word.y)<12 && Math.abs(w.x-word.x)<300).sort((a,b)=>Math.abs(a.x-word.x)-Math.abs(b.x-word.x))[0] || word;
     const tag=(tagged.text.match(identifier)||tagged.text.match(descriptor)||[tagged.text])[0].trim();
     if(out.some(p=>p.tag.toUpperCase()===tag.toUpperCase() && Math.abs(p.x-tagged.x)<50 && Math.abs(p.y-tagged.y)<50)) continue;
     out.push({id:crypto.randomUUID(),tag,description,type:types.find(([re])=>re.test(description))?.[1] || 'Elemento por revisar',voltage:description.match(/\b\d+(?:[.,]\d+)?\s?kV\b/i)?.[0]||'',current:description.match(/\b\d+(?:[.,]\d+)?\s?(?:A|kA)\b/i)?.[0]||'',source:tagged.source,confidence:tagged.confidence,validated:false,x:tagged.x,y:tagged.y,width:tagged.width,height:tagged.height});
