@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.wrangler/
+private/
+*.pdf
+.env*
+public/ocr/core/
+public/ocr/worker.min.js
+public/ort/
+.playwright-cli/

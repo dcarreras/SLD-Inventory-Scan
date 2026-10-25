@@ -1,0 +1,32 @@
+{
+  "name": "sld-inventory-scan",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "node scripts/assets.mjs && vite --host 127.0.0.1",
+    "build": "node scripts/assets.mjs && vite build",
+    "test": "vitest run",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "onnxruntime-web": "^1.30.0",
+    "pdfjs-dist": "^6.4.299",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "type": "module",
+  "private": true,
+  "overrides": {
+    "uuid": "11.1.1"
+  }
+}
