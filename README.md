@@ -2,6 +2,8 @@
 
 Aplicación experimental para leer un PDF unifilar de una página, proponer etiquetas y revisar un inventario. El PDF y su texto se procesan en el navegador y no se envían a ningún servidor. Los archivos se mantienen en memoria hasta cerrar o recargar la página; exporta el resultado antes de salir.
 
+**[Abrir SLD Inventory Scan](https://sld-inventory-scan.carreras-albacete-david.workers.dev/)** · No requiere instalación.
+
 ## Uso local
 
 Necesitas Node.js 22 o posterior. En esta carpeta:
@@ -29,7 +31,7 @@ npm test
 npm run build
 ```
 
-La salida está en `dist/`. `wrangler.jsonc` configura Workers Static Assets. En Cloudflare Workers Builds conecta este repositorio GitHub: comando de compilación `npm ci && npm run build`, comando de despliegue `npx wrangler deploy` y rama `main`. El despliegue sirve únicamente archivos estáticos; no necesita backend ni almacenamiento de planos. El archivo `_headers` incluye una política de seguridad que restringe las conexiones al propio origen. No usar archivos privados como fixtures del repositorio.
+La salida está en `dist/`. `wrangler.jsonc` configura Workers Static Assets. Cloudflare Workers Builds instala las dependencias y despliega automáticamente la rama `main` de este repositorio con `npm run build` y `npx wrangler deploy`. El despliegue sirve únicamente archivos estáticos; no necesita backend ni almacenamiento de planos. El archivo `_headers` incluye una política de seguridad que restringe las conexiones al propio origen. No usar archivos privados como fixtures del repositorio.
 
 ## Componentes y licencias
 
