@@ -12,6 +12,7 @@
   "author": "",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
+    "@paddleocr/paddleocr-js": "^0.4.2",
     "exceljs": "^4.4.0",
     "onnxruntime-web": "^1.30.0",
     "pdfjs-dist": "^6.4.299",
