@@ -1,7 +1,7 @@
 import * as pdfjs from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { LocalOcr } from './ocr-client';
-import { proposals } from './inventory';
+import { applyMappings, detectLegends, proposals } from './inventory';
 pdfjs.GlobalWorkerOptions.workerSrc=workerUrl;
 
 const DPI=300, TILE=3000, OVERLAP=160;
@@ -35,7 +35,7 @@ export async function analyze(file, options, progress, cancelled, signal) {
   const proposalMode=options.vector===false?'desktop':'enhanced';
   let ocr;
   try {
-    const pages=[],items=[];let wordCount=0;
+    const pages=[],items=[],legendMappings=[],legendZones=[];let wordCount=0;
     if(options.ocr){progress('Cargando OCR local',1);ocr=new LocalOcr(signal);await ocr.initialize()}
     for(let pageNumber=1;pageNumber<=doc.numPages;pageNumber++){
     if(cancelled())throw new Error('Análisis cancelado.');
@@ -59,11 +59,14 @@ export async function analyze(file, options, progress, cancelled, signal) {
       }
     }
     if(cancelled())throw new Error('Análisis cancelado.');
-    items.push(...proposals(words,{mode:proposalMode}).map(item=>({...item,page:pageNumber})));
+    const legends=proposalMode==='desktop'?{mappings:[],zones:[]}:detectLegends(words,{page:pageNumber});
+    legendMappings.push(...legends.mappings);legendZones.push(...legends.zones);
+    items.push(...proposals(words,{mode:proposalMode,legendZones:legends.zones}).map(item=>({...item,page:pageNumber})));
     if(options.vision){progress(`Procesando página ${pageNumber} de ${doc.numPages}`,100*(pageNumber-.05)/doc.numPages);items.push(...(await options.vision(preview,viewport.width,viewport.height)).map(item=>({...item,page:pageNumber})))}
     if(cancelled())throw new Error('Análisis cancelado.');
     pages.push({preview:preview.toDataURL('image/png'),width:viewport.width,height:viewport.height});wordCount+=words.length;preview.width=0;preview.height=0;
     }
-    return {pages,items,wordCount,analysis:{vector:options.vector!==false,ocr:!!options.ocr,vision:!!options.vision,proposalMode,dpi:DPI,tileSize:TILE,tileOverlap:OVERLAP}};
+    const classified=proposalMode==='desktop'?items:applyMappings(items,legendMappings);
+    return {pages,items:classified,legendMappings,legendZones,wordCount,analysis:{mode:options.mode||'custom',vector:options.vector!==false,ocr:!!options.ocr,vision:!!options.vision,proposalMode,dpi:DPI,tileSize:TILE,tileOverlap:OVERLAP}};
   }finally{if(ocr)ocr.dispose();await doc.cleanup()}
 }

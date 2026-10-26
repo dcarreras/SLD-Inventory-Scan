@@ -75,6 +75,40 @@ const english={
   'Clase COCO experimental; no identificada como símbolo eléctrico':'Experimental COCO class; not identified as an electrical symbol'
 };
 
+Object.assign(english,{
+  'Selecciona un PDF y revisa sus páginas antes del análisis.':'Select a PDF and inspect its pages before analysis.',
+  '2. Elige el modo':'2. Choose the mode',
+  'El modo reforzado combina texto vectorial y OCR. YOLO es experimental y no mejora el OCR.':'Reinforced mode combines vector text and OCR. YOLO is experimental and does not improve OCR.',
+  '3. Revisa el inventario':'3. Review the inventory',
+  'Edita la tabla, añade omisiones, elimina falsos positivos y valida las filas antes de exportar.':'Edit the table, add omissions, remove false positives and validate rows before export.',
+  '4. Comprueba el plano':'4. Check the diagram',
+  'Abre la pestaña Plano para centrar una propuesta y revisar su evidencia.':'Open the Diagram tab to center a proposal and inspect its evidence.',
+  'Las detecciones son propuestas y pueden contener errores u omisiones. La validación final corresponde al equipo de ingeniería.':'Detections are proposals and may contain errors or omissions. Final validation belongs to the engineering team.',
+  'El PDF se procesa en el navegador. Los datos de la sesión se pierden al cerrar o recargar.':'The PDF is processed in the browser. Session data is lost when closing or reloading.',
+  'Beneficio: puede recuperar etiquetas y características de planos escaneados o mixtos. Requiere más tiempo y memoria; revisa las propuestas y sus evidencias.':'Benefit: it can recover tags and specifications from scanned or mixed diagrams. It takes more time and memory; review proposals and their evidence.',
+  'No está entrenado para símbolos eléctricos, no lee texto y no mejora el OCR. Úsalo solo para exploración.':'It is not trained for electrical symbols, does not read text and does not improve OCR. Use it for exploration only.',
+  'Rápido':'Fast','Solo texto vectorial':'Vector text only','Reforzado':'Reinforced','Texto vectorial y OCR local':'Vector text and local OCR',
+  'Comparación escritorio':'Desktop comparison','Solo OCR para comparación':'OCR only for comparison','Experimental':'Experimental','Reforzado más YOLO11s':'Reinforced plus YOLO11s',
+  'Ajustes avanzados':'Advanced settings','Extrae el texto embebido en el PDF':'Extracts text embedded in the PDF',
+  'YOLO se ejecutará después de las fuentes de texto; sus resultados son experimentales y separados.':'YOLO runs after text sources; its results are experimental and separate.',
+  'Texto vectorial y OCR se combinan como fuentes de texto; los duplicados se depuran antes de proponer equipos.':'Vector text and OCR are combined as text sources; duplicates are removed before equipment proposals.',
+  'Solo OCR: resultado comparable con la aplicación de escritorio.':'OCR only: result comparable with the desktop application.',
+  'Solo texto vectorial: no se analizarán imágenes escaneadas.':'Vector text only: scanned images will not be analyzed.',
+  'Volver a configuración':'Back to settings','Continuar revisión':'Continue review','Reanalizar plano →':'Reanalyze diagram →',
+  'Cambiar el PDF descartará la sesión actual. ¿Continuar?':'Changing the PDF will discard the current session. Continue?',
+  'Reanalizar reemplazará las ediciones, validaciones y reglas actuales. ¿Continuar?':'Reanalysis will replace current edits, validations and rules. Continue?',
+  'Eliminará las filas seleccionadas de esta sesión. ¿Continuar?':'Selected rows will be removed from this session. Continue?',
+  'Inventario':'Inventory','Plano':'Diagram','Vistas de revisión':'Review views','Inventario editable':'Editable inventory',
+  'resultados':'results','Nueva fila':'New row','Eliminar seleccionadas':'Delete selected','Estado':'Status','Ver':'View',
+  'Confianza':'Confidence',
+  'Seleccionar':'Select','Selecciona una propuesta':'Select a proposal','Selecciona una fila en Inventario o un marcador en el plano.':'Select a row in Inventory or a marker on the diagram.',
+  'Volver a inventario':'Back to inventory','Esta fila no tiene evidencia en el plano.':'This row has no evidence in the diagram.',
+  'Leyendas y reglas':'Legends and rules','reglas disponibles':'rules available','No se han detectado reglas':'No rules detected',
+  'Las reglas clasifican propuestas reales; las entradas de leyenda se excluyen del inventario.':'Rules classify actual proposals; legend entries are excluded from the inventory.',
+  'Texto o sigla':'Text or acronym','Origen':'Origin','Activar regla':'Enable rule','Eliminar regla':'Delete rule','Añadir regla':'Add rule',
+  'Leyenda detectada':'Detected legend','Regla manual':'Manual rule','Entrada manual':'Manual entry'
+});
+
 export function translate(language,text) {
   if(language!=='en'||!text)return text;
   if(english[text])return english[text];

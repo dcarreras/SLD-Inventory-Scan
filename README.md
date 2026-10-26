@@ -13,9 +13,11 @@ npm ci
 npm run dev
 ```
 
-Abre la dirección local mostrada por Vite y selecciona un PDF. Puedes cambiar la interfaz entre español e inglés desde el selector superior; el idioma elegido se guarda en el navegador. Revisa las páginas en la vista previa y utiliza los controles de zoom antes de pulsar **Analizar plano**. Se analizan todas las páginas y las propuestas conservan su número de página. Para PDF escaneados o mixtos activa OCR. El OCR y el modelo se descargan desde el propio sitio y se ejecutan en tu equipo. En planos grandes o con muchas páginas el proceso puede tardar y consumir bastante memoria.
+Abre la dirección local mostrada por Vite y selecciona un PDF. Puedes cambiar la interfaz entre español e inglés desde el selector superior; el idioma elegido se guarda en el navegador. Revisa las páginas en la vista previa y utiliza los controles de zoom antes de pulsar **Analizar plano**. El modo **Reforzado** combina texto vectorial y OCR local; **Comparación escritorio** usa solo OCR y **YOLO11s experimental** se ejecuta por separado, sin mejorar el OCR. Se analizan todas las páginas y las propuestas conservan su número de página.
 
-En la revisión puedes buscar, filtrar, seleccionar, corregir y validar propuestas; las acciones de validación masiva afectan únicamente a los resultados visibles. Selecciona una propuesta para ver su recorte y centrarla en el plano. Exporta JSON o Excel. Las coordenadas se expresan en puntos PDF con origen arriba a la izquierda. Una confianza vacía indica texto vectorial sin puntuación OCR. El inventario no guarda el PDF ni proporciona un borrador persistente.
+Al terminar se abre la pestaña **Inventario**, una tabla editable para buscar, filtrar, corregir, validar, añadir y eliminar filas. Las acciones masivas afectan únicamente a los resultados visibles. Las filas manuales se identifican como tales y no tienen evidencia OCR. La pestaña **Plano** permite centrar una propuesta, ver su evidencia, usar zoom, pellizco o rueda y arrastrar para desplazarse. **Volver a configuración** conserva la sesión actual hasta reanalizar o cambiar el PDF. Exporta JSON o Excel antes de cerrar o recargar: no hay borrador persistente.
+
+La aplicación busca leyendas textuales como LEYENDA o LEGEND, propone equivalencias de abreviatura a tipo de equipo y excluye esas entradas del inventario para reducir falsos positivos. Las equivalencias se muestran en **Leyendas y reglas** y son editables; no se reconocen símbolos gráficos de leyenda sin un modelo especializado.
 
 ## Límites de la detección
 
@@ -39,7 +41,7 @@ La salida está en `dist/`. `wrangler.jsonc` configura Workers Static Assets. Cl
 
 ## Medición de paridad OCR
 
-La calidad se compara contra una referencia revisada por una persona, no por el número de propuestas. En la aplicación Windows, revisa las propuestas del mismo PDF, marca como válidas solo las correctas y guarda el borrador. En la web, desactiva **Texto vectorial** y **YOLO11s**, exporta el resultado JSON y conserva ambos archivos fuera de Git. La referencia de escritorio debe marcar explícitamente los elementos correctos con `accepted: true` o `validated: true`. El JSON web incluye los parámetros de análisis y el medidor rechaza una ejecución que no sea de solo OCR compatible con escritorio.
+La calidad se compara contra una referencia revisada por una persona, no por el número de propuestas. En la aplicación Windows, revisa las propuestas del mismo PDF, marca como válidas solo las correctas y guarda el borrador. En la web, selecciona **Comparación escritorio**, exporta el resultado JSON y conserva ambos archivos fuera de Git. La referencia de escritorio debe marcar explícitamente los elementos correctos con `accepted: true` o `validated: true`. El JSON web incluye los parámetros de análisis y el medidor rechaza una ejecución que no sea de solo OCR compatible con escritorio.
 
 ```bash
 node scripts/measure-parity.mjs private/referencia-validada.json private/resultado-web.json
