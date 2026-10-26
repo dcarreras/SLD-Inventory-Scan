@@ -14,6 +14,10 @@ describe('alineación con OCR de escritorio',()=>{
     expect(proposals([word('CT205CURRENTTRANSFORMER',10,10)])[0].tag).toBe('CT205');
     expect(proposals([word('VT300 VOLTAGE TRANSFORMER',10,10)])[0].tag).toBe('VT300');
   });
+  it('repite las reglas de propuesta de escritorio en el modo de comparación',()=>{
+    const rows=proposals([word('CB101',10,10),word('CT205CURRENTTRANSFORMER',40,10)],{mode:'desktop'});
+    expect(rows).toHaveLength(1);expect(rows[0]).toMatchObject({tag:'CB101',classificationBasis:'Compatibilidad con escritorio'});
+  });
   it('conserva identificadores próximos y clasifica sus prefijos explícitos',()=>{
     const rows=proposals([word('CB 101',10,10),word('CT205',40,10),word('CVT-02',75,10)]);
     expect(rows.map(({tag,type,classificationBasis})=>({tag,type,classificationBasis}))).toEqual([

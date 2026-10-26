@@ -58,7 +58,7 @@ export async function analyze(file, options, progress, cancelled, signal) {
       }
     }
     if(cancelled())throw new Error('Análisis cancelado.');
-    items.push(...proposals(words).map(item=>({...item,page:pageNumber})));
+    items.push(...proposals(words,{mode:options.vector===false?'desktop':'enhanced'}).map(item=>({...item,page:pageNumber})));
     if(options.vision){progress(`Procesando página ${pageNumber} de ${doc.numPages}`,100*(pageNumber-.05)/doc.numPages);items.push(...(await options.vision(preview,viewport.width,viewport.height)).map(item=>({...item,page:pageNumber})))}
     if(cancelled())throw new Error('Análisis cancelado.');
     pages.push({preview:preview.toDataURL('image/png'),width:viewport.width,height:viewport.height});wordCount+=words.length;preview.width=0;preview.height=0;

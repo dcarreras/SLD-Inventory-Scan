@@ -57,7 +57,7 @@ const english={
   'Validar visibles':'Validate visible', 'Desvalidar visibles':'Mark visible as pending',
   'No hay propuestas para mostrar.':'No proposals to display.', 'Validada':'Validated', 'Pendiente':'Pending',
   'DETALLE Y EVIDENCIA':'DETAILS AND EVIDENCE', 'Recorte de evidencia':'Evidence crop', 'Etiqueta':'Tag', 'Tipo':'Type',
-  'Base del tipo propuesto':'Basis for proposed type', 'Sin clasificar':'Unclassified', 'Edición manual':'Manual edit', 'Revisar tras edición':'Review after editing',
+  'Base del tipo propuesto':'Basis for proposed type', 'Sin clasificar':'Unclassified', 'Edición manual':'Manual edit', 'Revisar tras edición':'Review after editing', 'Compatibilidad con escritorio':'Desktop compatibility',
   'Descripción':'Description', 'Tensión':'Voltage', 'Corriente':'Current', 'Centrar evidencia en plano ↗':'Center evidence on diagram ↗',
   'SLD Inventory Scan · Las propuestas necesitan revisión técnica. Los datos permanecen en el navegador.':'SLD Inventory Scan · Proposals require technical review. Data stays in the browser.',
   'El MVP admite PDF de una página.':'The MVP supports one-page PDFs.',
