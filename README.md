@@ -37,6 +37,16 @@ npm run build
 
 La salida está en `dist/`. `wrangler.jsonc` configura Workers Static Assets. Cloudflare Workers Builds instala las dependencias y despliega automáticamente la rama `main` de este repositorio con `npm run build` y `npx wrangler deploy`. El despliegue sirve únicamente archivos estáticos; no necesita backend ni almacenamiento de planos. El archivo `_headers` incluye una política de seguridad que restringe las conexiones al propio origen. No usar archivos privados como fixtures del repositorio.
 
+## Medición de paridad OCR
+
+La calidad se compara contra una referencia revisada por una persona, no por el número de propuestas. Exporta el resultado web a JSON y conserva tanto ese archivo como la referencia validada fuera de Git. La referencia de escritorio debe marcar explícitamente los elementos correctos con `accepted: true` o `validated: true`.
+
+```bash
+node scripts/measure-parity.mjs private/referencia-validada.json private/resultado-web.json
+```
+
+El informe devuelve recall, precisión, falsos positivos, omisiones y distancia media de coordenadas. El objetivo de publicación para una mejora OCR es recuperar al menos el 90 % de las detecciones válidas de escritorio sin empeorar los falsos positivos, tras revisión humana.
+
 ## Componentes y licencias
 
 Código del proyecto: AGPL-3.0 o posterior, ver [LICENSE](LICENSE). Los paquetes conservan sus propias licencias en `node_modules` tras instalar. PDF.js (Apache-2.0), Tesseract.js y sus núcleos (Apache-2.0), tessdata_fast `eng.traineddata` (Apache-2.0), PaddleOCR.js y los modelos RapidOCR incluidos (Apache-2.0), ONNX Runtime Web (MIT), ExcelJS (MIT), React (MIT) y Vite (MIT).

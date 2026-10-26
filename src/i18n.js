@@ -83,5 +83,7 @@ export function translate(language,text) {
   if(match)return `Local OCR · tile ${match[1]} of ${match[2]}`;
   match=text.match(/^Análisis terminado: (\d+) fragmentos de texto y (\d+) propuestas\. Revisa cada resultado\.$/);
   if(match)return `Analysis complete: ${match[1]} text fragments and ${match[2]} proposals. Review each result.`;
+  match=text.match(/^No se pudo iniciar el OCR local\. Detalle técnico: (.+)$/);
+  if(match)return `Could not start local OCR. Technical detail: ${match[1]}`;
   return text;
 }
