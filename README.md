@@ -39,7 +39,7 @@ La salida está en `dist/`. `wrangler.jsonc` configura Workers Static Assets. Cl
 
 ## Medición de paridad OCR
 
-La calidad se compara contra una referencia revisada por una persona, no por el número de propuestas. Exporta el resultado web a JSON y conserva tanto ese archivo como la referencia validada fuera de Git. La referencia de escritorio debe marcar explícitamente los elementos correctos con `accepted: true` o `validated: true`.
+La calidad se compara contra una referencia revisada por una persona, no por el número de propuestas. En la aplicación Windows, revisa las propuestas del mismo PDF, marca como válidas solo las correctas y guarda el borrador. En la web, desactiva **Texto vectorial** y **YOLO11s**, exporta el resultado JSON y conserva ambos archivos fuera de Git. La referencia de escritorio debe marcar explícitamente los elementos correctos con `accepted: true` o `validated: true`. El JSON web incluye los parámetros de análisis y el medidor rechaza una ejecución que no sea de solo OCR compatible con escritorio.
 
 ```bash
 node scripts/measure-parity.mjs private/referencia-validada.json private/resultado-web.json

@@ -27,6 +27,6 @@ describe('análisis multipágina',()=>{
     state.pages=[page];
     vi.stubGlobal('document',{createElement:()=>({getContext:()=>({}),toDataURL:()=> 'data:image/png;base64,preview'})});
     const result=await analyze({arrayBuffer:async()=>new ArrayBuffer(0)},{ocr:false,vector:false},()=>{},()=>false);
-    expect(result).toMatchObject({wordCount:0,items:[]});
+    expect(result).toMatchObject({wordCount:0,items:[],analysis:{vector:false,ocr:false,vision:false,proposalMode:'desktop',dpi:300,tileSize:3000,tileOverlap:160}});
   });
 });

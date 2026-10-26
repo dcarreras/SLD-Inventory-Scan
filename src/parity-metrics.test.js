@@ -10,4 +10,9 @@ describe('métricas de paridad OCR',()=>{
   it('rechaza una referencia sin validación humana',()=>{
     expect(()=>measureParity({items:[{tag:'CB-01',rect:{x:0,y:0,width:1,height:1}}]},{items:[]})).toThrow('validado manualmente');
   });
+  it('rechaza resultados web que no se generaron en el modo comparable',()=>{
+    const reference={items:[{tag:'CB-01',accepted:true,rect:{x:0,y:0,width:1,height:1}}]};
+    const candidate={analysis:{ocr:true,vector:true,vision:false,proposalMode:'enhanced'},items:[]};
+    expect(()=>measureParity(reference,candidate)).toThrow('solo OCR');
+  });
 });

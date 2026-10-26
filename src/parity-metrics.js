@@ -9,6 +9,7 @@ function point(item,space,scale){
 }
 
 export function measureParity(reference,candidate,{referenceScale=300/72,candidateSpace='pdf',distance=80/(300/72)}={}){
+  if(candidate.analysis&&(!candidate.analysis.ocr||candidate.analysis.vector||candidate.analysis.vision||candidate.analysis.proposalMode!=='desktop'))throw new Error('El resultado web debe usar solo OCR y el modo de compatibilidad con escritorio.');
   const expected=rows(reference).filter(item=>item.accepted===true||item.validated===true);
   if(!expected.length)throw new Error('La referencia debe contener al menos un elemento validado manualmente.');
   const actual=rows(candidate),available=actual.map((item,index)=>({item,index,point:point(item,candidateSpace,referenceScale)})),matches=[];
