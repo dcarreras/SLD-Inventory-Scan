@@ -22,4 +22,11 @@ describe('análisis multipágina',()=>{
     expect(result.pages.map(({width})=>width)).toEqual([200,300]);
     expect(result.items.map(({tag,page})=>({tag,page}))).toEqual([{tag:'CB101',page:1},{tag:'CB101',page:2}]);
   });
+  it('permite excluir el texto vectorial para comparar solo OCR',async()=>{
+    const page={getViewport:({scale})=>({width:200*scale,height:100*scale,transform:[1,0,0,1,0,0]}),render:()=>({promise:Promise.resolve()}),getTextContent:async()=>({items:[{str:'CB101',width:30,transform:[1,0,0,10,10,20]}]})};
+    state.pages=[page];
+    vi.stubGlobal('document',{createElement:()=>({getContext:()=>({}),toDataURL:()=> 'data:image/png;base64,preview'})});
+    const result=await analyze({arrayBuffer:async()=>new ArrayBuffer(0)},{ocr:false,vector:false},()=>{},()=>false);
+    expect(result).toMatchObject({wordCount:0,items:[]});
+  });
 });

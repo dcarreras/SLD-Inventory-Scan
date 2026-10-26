@@ -41,8 +41,8 @@ export async function analyze(file, options, progress, cancelled, signal) {
     const page=await doc.getPage(pageNumber),viewport=page.getViewport({scale:1}),previewScale=Math.min(2,2400/Math.max(viewport.width,viewport.height)),preview=document.createElement('canvas');
     const pv=page.getViewport({scale:previewScale});preview.width=Math.ceil(pv.width);preview.height=Math.ceil(pv.height);
     progress(`Procesando página ${pageNumber} de ${doc.numPages}`,(pageNumber-1)*100/doc.numPages);await page.render({canvasContext:preview.getContext('2d'),viewport:pv,canvas:preview,background:'white'}).promise;
-    const content=await page.getTextContent(),words=[];
-    for(const item of content.items){if(!item.str?.trim())continue;const m=pdfjs.Util.transform(viewport.transform,item.transform),h=Math.max(1,Math.hypot(m[2],m[3]));words.push({text:item.str.trim(),x:m[4],y:m[5]-h,width:item.width||h,height:h,source:'Texto vectorial',confidence:null})}
+    const words=[];
+    if(options.vector!==false){const content=await page.getTextContent();for(const item of content.items){if(!item.str?.trim())continue;const m=pdfjs.Util.transform(viewport.transform,item.transform),h=Math.max(1,Math.hypot(m[2],m[3]));words.push({text:item.str.trim(),x:m[4],y:m[5]-h,width:item.width||h,height:h,source:'Texto vectorial',confidence:null})}}
     if(cancelled())throw new Error('Análisis cancelado.');
     if(options.ocr){
       const scale=DPI/72,v=page.getViewport({scale}),tiles=tilesFor(v.width,v.height);
