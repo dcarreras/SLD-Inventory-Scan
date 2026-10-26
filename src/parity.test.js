@@ -18,6 +18,10 @@ describe('alineación con OCR de escritorio',()=>{
     const rows=proposals([word('CB101',10,10),word('CT205CURRENTTRANSFORMER',40,10)],{mode:'desktop'});
     expect(rows).toHaveLength(1);expect(rows[0]).toMatchObject({tag:'CB101',classificationBasis:'Compatibilidad con escritorio'});
   });
+  it('normaliza los espacios que PDF.js conserva y PyMuPDF concatena',()=>{
+    const rows=proposals([word('VT300 VOLTAGE TRANSFORMER',10,10)],{mode:'desktop'});
+    expect(rows[0]).toMatchObject({tag:'VT300VOLTAGETRANSFORMER',type:'Elemento por revisar'});
+  });
   it('conserva identificadores próximos y clasifica sus prefijos explícitos',()=>{
     const rows=proposals([word('CB 101',10,10),word('CT205',40,10),word('CVT-02',75,10)]);
     expect(rows.map(({tag,type,classificationBasis})=>({tag,type,classificationBasis}))).toEqual([

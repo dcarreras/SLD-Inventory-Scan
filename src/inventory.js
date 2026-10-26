@@ -54,7 +54,7 @@ export function proposals(words,{mode='enhanced'}={}) {
   return out.sort((a,b)=>a.x-b.x||a.y-b.y).map(({anchorX,anchorY,...item})=>item);
 }
 function desktopProposals(words){
-  const clean=deduplicate(words),out=[];
+  const clean=deduplicate(words).map(word=>({...word,text:word.text.replace(/\s+/g,'')})),out=[];
   for(const word of clean){
     if(!desktopIdentifier.test(word.text)&&!desktopDescriptor.test(word.text))continue;
     const [x,y]=center(word),nearby=clean.filter(item=>{const [ix,iy]=center(item);return Math.abs(iy-y)<105/scale&&Math.abs(ix-x)<900/scale}).sort((a,b)=>a.x-b.x),description=nearby.map(item=>item.text).join(' '),tag=(nearby.find(item=>desktopIdentifier.test(item.text))||word).text;
